@@ -1,0 +1,42 @@
+<div class="ds-text-input" [class.disabled]="disabled" [class.error]="error">
+  @if (label) {
+    <label class="label" [for]="id">
+      {{ label }}
+      @if (required) {
+        <span aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <!-- INPUT -->
+  <input
+    class="input"
+    [id]="id"
+    [type]="type"
+    [value]="value"
+    [placeholder]="placeholder || ''"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [required]="required"
+    [attr.aria-label]="!label ? ariaLabel : null"
+    [attr.aria-required]="required || null"
+    [attr.aria-invalid]="error ? true : null"
+    [attr.aria-describedby]="describedBy"
+    (input)="handleInput($event)"
+    (focus)="handleFocus()"
+    (blur)="handleBlur()"
+  />
+
+  <!-- HINT -->
+  @if (hint) {
+    <div class="hint" [id]="hintId">
+      {{ hint }}
+    </div>
+  }
+  <!-- ERROR -->
+  @if (error) {
+    <div class="error-message" [id]="errorId" role="alert">
+      {{ error }}
+    </div>
+  }
+</div>
