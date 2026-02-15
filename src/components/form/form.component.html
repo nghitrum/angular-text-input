@@ -1,4 +1,4 @@
-<div class="example">
+<div class="showcase">
   <h2>Email form with Reactive Forms</h2>
   <form [formGroup]="loginFormReactive" (ngSubmit)="submitReactive()">
     <ds-text-input
@@ -21,11 +21,6 @@
     />
     <button type="submit" class="ds-button" [disabled]="loginFormReactive.invalid">Submit</button>
   </form>
-
-  <p>Email: {{ emailControlReactive?.value }}</p>
-  <p>Password: {{ passwordControlReactive?.value }}</p>
-
-  <hr />
 
   <h2>Email form with Template Driven Forms</h2>
   <form #loginFormTemplateDriven="ngForm" (ngSubmit)="submitTemplateDriven()">
@@ -56,7 +51,4 @@
       Submit
     </button>
   </form>
-
-  <p>Email: {{ emailTemplateDriven }}</p>
-  <p>Password: {{ passwordTemplateDriven }}</p>
 </div>

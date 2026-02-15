@@ -13,7 +13,7 @@
   [type]="type"
   [value]="value"
   [disabled]="disabled"
-  [placeholder]="layout === 'floating' ? '' : placeholder"
+  [placeholder]="layout === 'floating' ? '' : placeholder || ''"
   [readonly]="readonly"
   [required]="required"
   [attr.aria-label]="!label ? ariaLabel : null"
