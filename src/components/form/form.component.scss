@@ -1,0 +1,51 @@
+form .ds-button {
+  margin-top: var(--ds-space-md);
+}
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+  border-radius: var(--ds-radius-sm);
+
+  border: 1px solid var(--ds-button-border);
+  background: var(--ds-button-bg);
+  color: var(--ds-button-text);
+
+  font-size: var(--ds-font-md);
+  font-weight: 500;
+
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 80ms ease;
+}
+
+/* Hover */
+.ds-button:hover:not(:disabled) {
+  background: var(--ds-button-bg-hover);
+  border-color: var(--ds-button-border-hover);
+}
+
+/* Active (nice micro-interaction) */
+.ds-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Focus (keyboard accessibility) */
+.ds-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ds-button-focus-ring);
+}
+
+/* Disabled */
+.ds-button:disabled {
+  background: var(--ds-button-bg-disabled);
+  border-color: var(--ds-button-border-disabled);
+  color: var(--ds-button-text-disabled);
+  cursor: not-allowed;
+}

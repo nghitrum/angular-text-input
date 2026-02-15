@@ -1,0 +1,89 @@
+<div class="example">
+  <h2>Standalone search input with Reactive Forms</h2>
+  <ds-text-input
+    size="lg"
+    label="Search"
+    placeholder="Search products..."
+    hint="Type a keyword and press enter"
+    (valueChange)="onSearchChange($event)"
+  />
+  <p>Searching for: {{ searchTermReactive }}</p>
+
+  <hr />
+  <h2>Standalone search input with Template Driven</h2>
+  <ds-text-input
+    name="search"
+    label="Search"
+    placeholder="Search products..."
+    hint="Type a keyword and press enter"
+    [(ngModel)]="searchTermTemplateDriven"
+  />
+
+  <p>Searching for: {{ searchTermTemplateDriven }}</p>
+  <hr />
+
+  <h2>Standalone search input disabled</h2>
+  <ds-text-input
+    name="search"
+    placeholder="Search products..."
+    [value]="'hello world'"
+    [disabled]="true"
+  />
+  <hr />
+
+  <h2>Standalone search input readonly</h2>
+  <ds-text-input
+    name="search"
+    placeholder="Search products..."
+    [value]="'hello world'"
+    [readonly]="true"
+  />
+  <hr />
+
+  <h2>Standalone search input with custom CSS class</h2>
+  <ds-text-input
+    name="search"
+    placeholder="Search products..."
+    [value]="'hello world'"
+    class="custom-input"
+  />
+  <hr />
+
+  <ds-text-input
+    name="search"
+    label="Inline"
+    placeholder="Search products..."
+    [value]="'hello world'"
+    layout="inline"
+  />
+
+  <ds-text-input
+    name="search"
+    label="Floating Small"
+    size="sm"
+    placeholder="Search products..."
+    layout="floating"
+  />
+  <ds-text-input
+    name="search"
+    label="Floating Medium"
+    size="md"
+    placeholder="Search products..."
+    layout="floating"
+  />
+  <ds-text-input
+    name="search"
+    label="Floating Large"
+    size="lg"
+    placeholder="Search products..."
+    layout="floating"
+  />
+  <ds-text-input
+    name="search"
+    label="Stacked (default)"
+    placeholder="Search products..."
+    [value]="'hello world'"
+    layout="stacked"
+  />
+  <hr />
+</div>

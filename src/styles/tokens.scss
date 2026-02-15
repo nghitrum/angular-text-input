@@ -1,0 +1,68 @@
+:root {
+  /* spacing */
+  --ds-space-xs: 4px;
+  --ds-space-sm: 8px;
+  --ds-space-md: 16px;
+
+  /* radius */
+  --ds-radius-sm: 4px;
+
+  /* typography */
+  --ds-font-sm: 12px;
+  --ds-font-md: 16px;
+  --ds-font-lg: 20px;
+
+  --ds-hint-font-size: 12px;
+  --ds-error-font-size: 12px;
+
+  /** label font sizes */
+  --ds-label-font-size-sm: 14px;
+  --ds-label-font-size-md: 16px;
+  --ds-label-font-size-lg: 18px;
+
+  /* input sizes */
+  --ds-input-height-sm: 32px;
+  --ds-input-height-md: 40px;
+  --ds-input-height-lg: 48px;
+
+  --ds-input-padding-x-sm: 16px;
+  --ds-input-padding-y-sm: 4px;
+
+  --ds-input-padding-x-md: 16px;
+  --ds-input-padding-y-md: 8px;
+
+  --ds-input-padding-x-lg: 16px;
+  --ds-input-padding-y-lg: 12px;
+}
+
+/* =========================================================
+   Floating label tokens (size dependent)
+   ========================================================= */
+
+/* SMALL */
+:root {
+  --ds-floating-padding-top-sm: 14px;
+  --ds-floating-label-rest-y-sm: 50%;
+  --ds-floating-label-float-y-sm: 4px;
+}
+
+/* MEDIUM */
+:root {
+  --ds-floating-padding-top-md: 16px;
+  --ds-floating-label-rest-y-md: 50%;
+  --ds-floating-label-float-y-md: 6px;
+}
+
+/* LARGE */
+:root {
+  --ds-floating-padding-top-lg: 18px;
+  --ds-floating-label-rest-y-lg: 50%;
+  --ds-floating-label-float-y-lg: 8px;
+}
+
+/* shared */
+:root {
+  --ds-floating-label-scale: 0.85;
+  --ds-floating-label-offset-x: var(--ds-input-padding-x-md);
+  --ds-floating-label-bg: var(--ds-input-bg);
+}

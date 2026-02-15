@@ -1,43 +1,15 @@
-<main class="main">
+<main class="main" role="main" [attr.data-theme]="theme">
   <div class="content">
-    <div class="example">
-      <h2>Standalone search input</h2>
-      <ds-text-input
-        label="Search"
-        placeholder="Search products..."
-        hint="Type a keyword and press enter"
-        (valueChange)="onSearchChange($event)"
-      />
-
-      <p>Searching for: {{ searchTerm() }}</p>
+    <div class="header">
+      <h1>Design System Components</h1>
+      <p>Explore the components in light and dark themes.</p>
+      <label class="switch">
+        <input type="checkbox" (change)="toggleTheme()" />
+        <span class="slider round"></span>
+      </label>
     </div>
 
-    <div class="example">
-      <h2>Email form with validation</h2>
-      <form [formGroup]="emailForm" (ngSubmit)="submit()">
-        <ds-text-input
-          formControlName="email"
-          type="email"
-          label="Email"
-          placeholder="Enter your email"
-          hint="hello@example.com"
-          [required]="true"
-          [error]="emailError"
-        />
-        <ds-text-input
-          formControlName="password"
-          type="password"
-          label="Password"
-          placeholder="Enter your password"
-          hint="Minimum 6 letters"
-          [required]="true"
-          [error]="passwordError"
-        />
-        <button type="submit" [disabled]="emailForm.invalid">Submit</button>
-      </form>
-
-      <p>Email: {{ emailControl?.value }}</p>
-      <p>Password: {{ passwordControl?.value }}</p>
-    </div>
+    <ds-standalone />
+    <ds-form />
   </div>
 </main>

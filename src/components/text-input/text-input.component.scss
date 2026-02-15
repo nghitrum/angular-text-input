@@ -1,0 +1,217 @@
+/* =========================================================
+   HOST (component root)
+   ========================================================= */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-xs);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   BASE INPUT
+   ========================================================= */
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+
+  border-radius: var(--ds-radius-sm);
+  border: var(--ds-input-border-width) solid var(--ds-input-border-color);
+  background: var(--ds-input-bg);
+  color: var(--ds-input-text-color);
+
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+/* =========================================================
+   LABEL BASE
+   ========================================================= */
+
+.label {
+  font-weight: 500;
+  color: var(--ds-label-color);
+}
+
+/* =========================================================
+   SIZE SYSTEM
+   ========================================================= */
+
+:host(.size-sm) .input {
+  height: var(--ds-input-height-sm);
+  padding: var(--ds-input-padding-y-sm) var(--ds-input-padding-x-sm);
+  font-size: var(--ds-font-sm);
+}
+
+:host(.size-md) .input {
+  height: var(--ds-input-height-md);
+  padding: var(--ds-input-padding-y-md) var(--ds-input-padding-x-md);
+  font-size: var(--ds-font-md);
+}
+
+:host(.size-lg) .input {
+  height: var(--ds-input-height-lg);
+  padding: var(--ds-input-padding-y-lg) var(--ds-input-padding-x-lg);
+  font-size: var(--ds-font-lg);
+}
+
+:host(.size-sm) .label {
+  font-size: var(--ds-label-font-size-sm);
+}
+
+:host(.size-md) .label {
+  font-size: var(--ds-label-font-size-md);
+}
+
+:host(.size-lg) .label {
+  font-size: var(--ds-label-font-size-lg);
+}
+
+/* =========================================================
+   INLINE LAYOUT
+   ========================================================= */
+
+:host(.layout-inline) {
+  flex-direction: row;
+  align-items: center;
+}
+
+:host(.layout-inline) .label {
+  margin-right: var(--ds-space-sm);
+}
+
+/* =========================================================
+   FLOATING LAYOUT BASE
+   ========================================================= */
+
+:host(.layout-floating) .label {
+  position: absolute;
+  left: var(--ds-input-padding-x-sm);
+  transform-origin: left top;
+  pointer-events: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 160ms ease,
+    top 160ms ease,
+    color 160ms ease;
+}
+
+/* =========================================================
+   FLOATING LAYOUT + SIZE COMBINATIONS
+   ========================================================= */
+
+/* SMALL */
+:host(.layout-floating.size-sm) .input {
+  height: calc(var(--ds-input-height-sm) * 1.5);
+  padding-top: var(--ds-floating-padding-top-sm);
+}
+
+:host(.layout-floating.size-sm) .label {
+  top: var(--ds-floating-label-rest-y-sm);
+  transform: translateY(-50%);
+}
+
+:host(.layout-floating.size-sm:focus-within) .label,
+:host(.layout-floating.size-sm.has-value) .label {
+  top: var(--ds-floating-label-float-y-sm);
+  transform: translateY(0) scale(var(--ds-floating-label-scale));
+}
+
+/* MEDIUM */
+:host(.layout-floating.size-md) .input {
+  height: calc(var(--ds-input-height-md) * 1.5);
+  padding-top: var(--ds-floating-padding-top-md);
+}
+
+:host(.layout-floating.size-md) .label {
+  top: var(--ds-floating-label-rest-y-md);
+  transform: translateY(-50%);
+}
+
+:host(.layout-floating.size-md:focus-within) .label,
+:host(.layout-floating.size-md.has-value) .label {
+  top: var(--ds-floating-label-float-y-md);
+  transform: translateY(0) scale(var(--ds-floating-label-scale));
+}
+
+/* LARGE */
+:host(.layout-floating.size-lg) .input {
+  height: calc(var(--ds-input-height-lg) * 1.5);
+  padding-top: var(--ds-floating-padding-top-lg);
+}
+
+:host(.layout-floating.size-lg) .label {
+  top: var(--ds-floating-label-rest-y-lg);
+  transform: translateY(-50%);
+}
+
+:host(.layout-floating.size-lg:focus-within) .label,
+:host(.layout-floating.size-lg.has-value) .label {
+  top: var(--ds-floating-label-float-y-lg);
+  transform: translateY(0) scale(var(--ds-floating-label-scale));
+}
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+:host(:not(.disabled)) .input:hover {
+  border-color: var(--ds-input-border-hover);
+}
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.input:focus {
+  outline: none;
+  border-color: var(--ds-input-border-focus);
+  box-shadow: 0 0 0 2px var(--ds-input-focus-ring);
+}
+
+:host(.layout-floating:focus-within) .label {
+  color: var(--ds-input-border-focus);
+}
+
+/* =========================================================
+   HINT / ERROR
+   ========================================================= */
+
+.hint {
+  font-size: var(--ds-hint-font-size);
+  color: var(--ds-hint-color);
+}
+
+.error-message {
+  font-size: var(--ds-error-font-size);
+  color: var(--ds-error-text-color);
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+:host(.error) .input {
+  border-color: var(--ds-input-border-error);
+}
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+:host(.disabled) .input {
+  background: var(--ds-input-bg-disabled);
+  border-color: var(--ds-input-border-disabled);
+  color: var(--ds-input-text-disabled);
+  cursor: not-allowed;
+}
+
+:host(.disabled) .input:hover {
+  border-color: var(--ds-input-border-disabled);
+}

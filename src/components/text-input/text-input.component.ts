@@ -5,6 +5,7 @@ import {
   EventEmitter,
   forwardRef,
   ChangeDetectionStrategy,
+  HostBinding,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -14,7 +15,7 @@ let nextId = 0;
   selector: 'ds-text-input',
   standalone: true,
   templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css'],
+  styleUrls: ['./text-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -25,11 +26,17 @@ let nextId = 0;
   ],
 })
 export class TextInputComponent implements ControlValueAccessor {
-  // ===== INTERNAL STATE =====
-  value = '';
+  // =================================================
+  // INTERNAL STATE
+  // =================================================
+
+  private _value = '';
   private _disabled = false;
 
-  // ===== PUBLIC API =====
+  // =================================================
+  // PUBLIC API
+  // =================================================
+
   @Input() id = `ds-text-input-${nextId++}`;
   @Input() label?: string;
   @Input() ariaLabel?: string;
@@ -40,6 +47,15 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() readonly = false;
   @Input() required = false;
+  @Input() layout: 'stacked' | 'inline' | 'floating' = 'stacked';
+
+  @Input()
+  set value(v: string) {
+    this._value = v ?? '';
+  }
+  get value() {
+    return this._value;
+  }
 
   @Input()
   set disabled(value: boolean) {
@@ -53,7 +69,10 @@ export class TextInputComponent implements ControlValueAccessor {
   @Output() focus = new EventEmitter<void>();
   @Output() blur = new EventEmitter<void>();
 
-  // ===== ACCESSIBILITY IDS =====
+  // =================================================
+  // ACCESSIBILITY
+  // =================================================
+
   get hintId() {
     return this.hint ? `${this.id}-hint` : null;
   }
@@ -62,57 +81,96 @@ export class TextInputComponent implements ControlValueAccessor {
     return this.error ? `${this.id}-error` : null;
   }
 
-  get describedBy() {
-    return [this.hintId, this.errorId].filter(Boolean).join(' ') || null;
+  get describedBy(): string | null {
+    return this.errorId ?? this.hintId ?? null;
   }
 
-  // ===== CONTROL VALUE ACCESSOR =====
-  private onChange = (value: string) => {
-    console.log('onChange called with:', value);
-  };
-  private onTouched = () => {
-    console.log('onTouched called');
-  };
+  // =================================================
+  // CONTROL VALUE ACCESSOR
+  // =================================================
 
-  writeValue(value: string | null): void {
-    console.log('writeValue called with:', value);
+  private onChange = (_: string) => {};
+  private onTouched = () => {};
+
+  writeValue(value: string | null) {
     this.value = value ?? '';
   }
 
-  registerOnChange(fn: (value: string) => void): void {
-    console.log('registerOnChange called');
+  registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
-    console.log('registerOnTouched called');
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    console.log('setDisabledState called with:', isDisabled);
+  setDisabledState(isDisabled: boolean) {
     this._disabled = isDisabled;
   }
 
-  // ===== EVENT HANDLERS =====
-  handleInput(event: Event) {
-    console.log('handleInput called with:', event);
-    const input = event.target as HTMLInputElement;
-    const newValue = input.value;
+  // =================================================
+  // EVENTS
+  // =================================================
 
-    this.value = newValue;
-    this.onChange(newValue);
-    this.valueChange.emit(newValue);
+  handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this._value = value;
+    this.onChange(value);
+    this.valueChange.emit(value);
   }
 
   handleFocus() {
-    console.log('handleFocus called');
     this.focus.emit();
   }
 
   handleBlur() {
-    console.log('handleBlur called');
     this.onTouched();
     this.blur.emit();
+  }
+
+  // =================================================
+  // HOST CLASSES
+  // =================================================
+
+  @HostBinding('class.ds-text-input') baseClass = true;
+
+  @HostBinding('class.disabled') get hostDisabled() {
+    return this.disabled;
+  }
+
+  @HostBinding('class.error') get hostError() {
+    return !!this.error;
+  }
+
+  @HostBinding('class.size-sm') get sizeSm() {
+    return this.size === 'sm';
+  }
+
+  @HostBinding('class.size-md') get sizeMd() {
+    return this.size === 'md';
+  }
+
+  @HostBinding('class.size-lg') get sizeLg() {
+    return this.size === 'lg';
+  }
+
+  @HostBinding('class.layout-stacked')
+  get isStacked() {
+    return this.layout === 'stacked';
+  }
+
+  @HostBinding('class.layout-inline')
+  get isInline() {
+    return this.layout === 'inline';
+  }
+
+  @HostBinding('class.layout-floating')
+  get isFloating() {
+    return this.layout === 'floating';
+  }
+
+  @HostBinding('class.has-value')
+  get hasValue() {
+    return !!this.value;
   }
 }

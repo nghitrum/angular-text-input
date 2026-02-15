@@ -1,0 +1,62 @@
+<div class="example">
+  <h2>Email form with Reactive Forms</h2>
+  <form [formGroup]="loginFormReactive" (ngSubmit)="submitReactive()">
+    <ds-text-input
+      formControlName="email"
+      type="email"
+      label="Email"
+      placeholder="Enter your email"
+      hint="hello@example.com"
+      [required]="true"
+      [error]="emailReactiveError"
+    />
+    <ds-text-input
+      formControlName="password"
+      type="password"
+      label="Password"
+      placeholder="Enter your password"
+      hint="Minimum 6 letters"
+      [required]="true"
+      [error]="passwordReactiveError"
+    />
+    <button type="submit" class="ds-button" [disabled]="loginFormReactive.invalid">Submit</button>
+  </form>
+
+  <p>Email: {{ emailControlReactive?.value }}</p>
+  <p>Password: {{ passwordControlReactive?.value }}</p>
+
+  <hr />
+
+  <h2>Email form with Template Driven Forms</h2>
+  <form #loginFormTemplateDriven="ngForm" (ngSubmit)="submitTemplateDriven()">
+    <ds-text-input
+      name="email"
+      email
+      label="Email"
+      placeholder="Enter your email"
+      hint="hello@example.com"
+      [(ngModel)]="emailTemplateDriven"
+      #emailInput="ngModel"
+      [required]="true"
+      [error]="emailTemplateDrivenError(emailInput)"
+    />
+    <ds-text-input
+      name="password"
+      type="password"
+      label="Password"
+      placeholder="Enter your password"
+      hint="Minimum 6 letters"
+      [(ngModel)]="passwordTemplateDriven"
+      #passwordInput="ngModel"
+      [required]="true"
+      minlength="6"
+      [error]="passwordTemplateDrivenError(passwordInput)"
+    />
+    <button type="submit" class="ds-button" [disabled]="loginFormTemplateDriven.invalid">
+      Submit
+    </button>
+  </form>
+
+  <p>Email: {{ emailTemplateDriven }}</p>
+  <p>Password: {{ passwordTemplateDriven }}</p>
+</div>
