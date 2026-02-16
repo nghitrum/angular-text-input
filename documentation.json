@@ -393,7 +393,7 @@
         },
         {
             "name": "TextInputComponent",
-            "id": "component-TextInputComponent-30812851e49be4d381e8ad4a91f62b02eabcb06a55371da2284867bd241a6ba32027ba941b459784b0278b3e80b9a6648dfd6271ab5858b26c9580d641cec30e",
+            "id": "component-TextInputComponent-aac7fcfaf35365c7a815dff4b5a209c8ded41104c6dac7ca0a04a9b0e53fd05a8421bdb7df8d4bf66b08dd25aa7c3b8403d359c8a82b49f0b7513f148a4e4ede",
             "file": "src/components/text-input/text-input.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -580,26 +580,6 @@
                     "line": 33,
                     "modifierKind": [
                         123
-                    ]
-                },
-                {
-                    "name": "baseClass",
-                    "defaultValue": "true",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 135,
-                    "decorators": [
-                        {
-                            "name": "HostBinding",
-                            "stringifiedArguments": "'class.ds-text-input'"
-                        }
-                    ],
-                    "modifierKind": [
-                        171
                     ]
                 },
                 {
@@ -842,15 +822,6 @@
                     "name": "class.disabled",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 137,
-                    "type": "boolean",
-                    "decorators": []
-                },
-                {
-                    "name": "class.ds-text-input",
-                    "defaultValue": "true",
-                    "deprecated": false,
-                    "deprecationMessage": "",
                     "line": 135,
                     "type": "boolean",
                     "decorators": []
@@ -859,7 +830,7 @@
                     "name": "class.error",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 141,
+                    "line": 139,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -867,7 +838,7 @@
                     "name": "class.has-value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 173,
+                    "line": 171,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -875,7 +846,7 @@
                     "name": "class.layout-floating",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 168,
+                    "line": 166,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -883,7 +854,7 @@
                     "name": "class.layout-inline",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 163,
+                    "line": 161,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -891,7 +862,7 @@
                     "name": "class.layout-stacked",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 158,
+                    "line": 156,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -899,7 +870,7 @@
                     "name": "class.size-lg",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 153,
+                    "line": 151,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -907,7 +878,7 @@
                     "name": "class.size-md",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 149,
+                    "line": 147,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -915,7 +886,7 @@
                     "name": "class.size-sm",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 145,
+                    "line": 143,
                     "type": "boolean",
                     "decorators": []
                 }
@@ -926,7 +897,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  forwardRef,\n  ChangeDetectionStrategy,\n  HostBinding,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nlet nextId = 0;\n\n@Component({\n  selector: 'ds-text-input',\n  standalone: true,\n  templateUrl: './text-input.component.html',\n  styleUrls: ['./text-input.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => TextInputComponent),\n      multi: true,\n    },\n  ],\n})\nexport class TextInputComponent implements ControlValueAccessor {\n  // =================================================\n  // INTERNAL STATE\n  // =================================================\n\n  private _value = '';\n  private _disabled = false;\n\n  // =================================================\n  // PUBLIC API\n  // =================================================\n\n  @Input() id = `ds-text-input-${nextId++}`;\n  @Input() label?: string;\n  @Input() ariaLabel?: string;\n  @Input() placeholder?: string;\n  @Input() hint?: string;\n  @Input() error?: string;\n  @Input() type: 'text' | 'email' | 'password' = 'text';\n  @Input() size: 'sm' | 'md' | 'lg' = 'md';\n  @Input() readonly = false;\n  @Input() required = false;\n  @Input() layout: 'stacked' | 'inline' | 'floating' = 'stacked';\n\n  @Input()\n  set value(v: string) {\n    this._value = v ?? '';\n  }\n  get value() {\n    return this._value;\n  }\n\n  @Input()\n  set disabled(value: boolean) {\n    this._disabled = value;\n  }\n  get disabled() {\n    return this._disabled;\n  }\n\n  @Output() valueChange = new EventEmitter<string>();\n  @Output() focus = new EventEmitter<void>();\n  @Output() blur = new EventEmitter<void>();\n\n  // =================================================\n  // ACCESSIBILITY\n  // =================================================\n\n  get hintId() {\n    return this.hint ? `${this.id}-hint` : null;\n  }\n\n  get errorId() {\n    return this.error ? `${this.id}-error` : null;\n  }\n\n  get describedBy(): string | null {\n    return this.errorId ?? this.hintId ?? null;\n  }\n\n  // =================================================\n  // CONTROL VALUE ACCESSOR\n  // =================================================\n\n  private onChange = (_: string) => {};\n  private onTouched = () => {};\n\n  writeValue(value: string | null) {\n    this.value = value ?? '';\n  }\n\n  registerOnChange(fn: (value: string) => void) {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(fn: () => void) {\n    this.onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this._disabled = isDisabled;\n  }\n\n  // =================================================\n  // EVENTS\n  // =================================================\n\n  handleInput(event: Event) {\n    const value = (event.target as HTMLInputElement).value;\n    this._value = value;\n    this.onChange(value);\n    this.valueChange.emit(value);\n  }\n\n  handleFocus() {\n    this.focus.emit();\n  }\n\n  handleBlur() {\n    this.onTouched();\n    this.blur.emit();\n  }\n\n  // =================================================\n  // HOST CLASSES\n  // =================================================\n\n  @HostBinding('class.ds-text-input') baseClass = true;\n\n  @HostBinding('class.disabled') get hostDisabled() {\n    return this.disabled;\n  }\n\n  @HostBinding('class.error') get hostError() {\n    return !!this.error;\n  }\n\n  @HostBinding('class.size-sm') get sizeSm() {\n    return this.size === 'sm';\n  }\n\n  @HostBinding('class.size-md') get sizeMd() {\n    return this.size === 'md';\n  }\n\n  @HostBinding('class.size-lg') get sizeLg() {\n    return this.size === 'lg';\n  }\n\n  @HostBinding('class.layout-stacked')\n  get isStacked() {\n    return this.layout === 'stacked';\n  }\n\n  @HostBinding('class.layout-inline')\n  get isInline() {\n    return this.layout === 'inline';\n  }\n\n  @HostBinding('class.layout-floating')\n  get isFloating() {\n    return this.layout === 'floating';\n  }\n\n  @HostBinding('class.has-value')\n  get hasValue() {\n    return !!this.value;\n  }\n}\n",
+            "sourceCode": "import {\n  Component,\n  Input,\n  Output,\n  EventEmitter,\n  forwardRef,\n  ChangeDetectionStrategy,\n  HostBinding,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nlet nextId = 0;\n\n@Component({\n  selector: 'ds-text-input',\n  standalone: true,\n  templateUrl: './text-input.component.html',\n  styleUrls: ['./text-input.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      useExisting: forwardRef(() => TextInputComponent),\n      multi: true,\n    },\n  ],\n})\nexport class TextInputComponent implements ControlValueAccessor {\n  // =================================================\n  // INTERNAL STATE\n  // =================================================\n\n  private _value = '';\n  private _disabled = false;\n\n  // =================================================\n  // PUBLIC API\n  // =================================================\n\n  @Input() id = `ds-text-input-${nextId++}`;\n  @Input() label?: string;\n  @Input() ariaLabel?: string;\n  @Input() placeholder?: string;\n  @Input() hint?: string;\n  @Input() error?: string;\n  @Input() type: 'text' | 'email' | 'password' = 'text';\n  @Input() size: 'sm' | 'md' | 'lg' = 'md';\n  @Input() readonly = false;\n  @Input() required = false;\n  @Input() layout: 'stacked' | 'inline' | 'floating' = 'stacked';\n\n  @Input()\n  set value(v: string) {\n    this._value = v ?? '';\n  }\n  get value() {\n    return this._value;\n  }\n\n  @Input()\n  set disabled(value: boolean) {\n    this._disabled = value;\n  }\n  get disabled() {\n    return this._disabled;\n  }\n\n  @Output() valueChange = new EventEmitter<string>();\n  @Output() focus = new EventEmitter<void>();\n  @Output() blur = new EventEmitter<void>();\n\n  // =================================================\n  // ACCESSIBILITY\n  // =================================================\n\n  get hintId() {\n    return this.hint ? `${this.id}-hint` : null;\n  }\n\n  get errorId() {\n    return this.error ? `${this.id}-error` : null;\n  }\n\n  get describedBy(): string | null {\n    return this.errorId ?? this.hintId ?? null;\n  }\n\n  // =================================================\n  // CONTROL VALUE ACCESSOR\n  // =================================================\n\n  private onChange = (_: string) => {};\n  private onTouched = () => {};\n\n  writeValue(value: string | null) {\n    this.value = value ?? '';\n  }\n\n  registerOnChange(fn: (value: string) => void) {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(fn: () => void) {\n    this.onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this._disabled = isDisabled;\n  }\n\n  // =================================================\n  // EVENTS\n  // =================================================\n\n  handleInput(event: Event) {\n    const value = (event.target as HTMLInputElement).value;\n    this._value = value;\n    this.onChange(value);\n    this.valueChange.emit(value);\n  }\n\n  handleFocus() {\n    this.focus.emit();\n  }\n\n  handleBlur() {\n    this.onTouched();\n    this.blur.emit();\n  }\n\n  // =================================================\n  // HOST CLASSES\n  // =================================================\n\n  @HostBinding('class.disabled') get hostDisabled() {\n    return this.disabled;\n  }\n\n  @HostBinding('class.error') get hostError() {\n    return !!this.error;\n  }\n\n  @HostBinding('class.size-sm') get sizeSm() {\n    return this.size === 'sm';\n  }\n\n  @HostBinding('class.size-md') get sizeMd() {\n    return this.size === 'md';\n  }\n\n  @HostBinding('class.size-lg') get sizeLg() {\n    return this.size === 'lg';\n  }\n\n  @HostBinding('class.layout-stacked')\n  get isStacked() {\n    return this.layout === 'stacked';\n  }\n\n  @HostBinding('class.layout-inline')\n  get isInline() {\n    return this.layout === 'inline';\n  }\n\n  @HostBinding('class.layout-floating')\n  get isFloating() {\n    return this.layout === 'floating';\n  }\n\n  @HostBinding('class.has-value')\n  get hasValue() {\n    return !!this.value;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1053,7 +1024,7 @@
                         "name": "hostDisabled",
                         "type": "",
                         "returnType": "",
-                        "line": 137
+                        "line": 135
                     }
                 },
                 "hostError": {
@@ -1062,7 +1033,7 @@
                         "name": "hostError",
                         "type": "",
                         "returnType": "",
-                        "line": 141
+                        "line": 139
                     }
                 },
                 "sizeSm": {
@@ -1071,7 +1042,7 @@
                         "name": "sizeSm",
                         "type": "",
                         "returnType": "",
-                        "line": 145
+                        "line": 143
                     }
                 },
                 "sizeMd": {
@@ -1080,7 +1051,7 @@
                         "name": "sizeMd",
                         "type": "",
                         "returnType": "",
-                        "line": 149
+                        "line": 147
                     }
                 },
                 "sizeLg": {
@@ -1089,7 +1060,7 @@
                         "name": "sizeLg",
                         "type": "",
                         "returnType": "",
-                        "line": 153
+                        "line": 151
                     }
                 },
                 "isStacked": {
@@ -1098,7 +1069,7 @@
                         "name": "isStacked",
                         "type": "",
                         "returnType": "",
-                        "line": 158
+                        "line": 156
                     }
                 },
                 "isInline": {
@@ -1107,7 +1078,7 @@
                         "name": "isInline",
                         "type": "",
                         "returnType": "",
-                        "line": 163
+                        "line": 161
                     }
                 },
                 "isFloating": {
@@ -1116,7 +1087,7 @@
                         "name": "isFloating",
                         "type": "",
                         "returnType": "",
-                        "line": 168
+                        "line": 166
                     }
                 },
                 "hasValue": {
@@ -1125,7 +1096,7 @@
                         "name": "hasValue",
                         "type": "",
                         "returnType": "",
-                        "line": 173
+                        "line": 171
                     }
                 }
             },
@@ -1273,7 +1244,7 @@
                 "linktype": "component",
                 "name": "TextInputComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/39",
+                "coverageCount": "0/37",
                 "status": "low"
             },
             {

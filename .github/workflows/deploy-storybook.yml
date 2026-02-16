@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.11.1' # Use a stable Node version
+          node-version: '22.12.0' # Use a stable Node version
 
       # Build and deploy using the community action
       - name: Deploy Storybook
