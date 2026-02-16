@@ -1,9 +1,23 @@
 import type { StorybookConfig } from '@storybook/angular';
 import type { Configuration, RuleSetRule } from 'webpack';
+import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-styling-webpack'],
+  addons: [
+    '@storybook/addon-a11y',
+    '@storybook/addon-styling-webpack',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
+  ],
   framework: {
     name: '@storybook/angular',
     options: {

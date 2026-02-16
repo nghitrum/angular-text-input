@@ -77,12 +77,25 @@
    ========================================================= */
 
 :host(.layout-inline) {
+  display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+}
+
+:host(.layout-inline) .control {
+  display: flex;
+  flex-direction: column; /* Stacks input and hint vertically */
+  flex-grow: 1;
 }
 
 :host(.layout-inline) .label {
   margin-right: var(--ds-space-sm);
+  margin-top: var(--ds-space-sm);
+}
+
+:host(.layout-inline) .hint,
+.error-message {
+  flex: 1;
 }
 
 /* =========================================================
@@ -186,11 +199,15 @@
 .hint {
   font-size: var(--ds-hint-font-size);
   color: var(--ds-hint-color);
+  margin-top: var(--ds-space-xs);
+  margin-left: var(--ds-space-xs);
 }
 
 .error-message {
   font-size: var(--ds-error-font-size);
   color: var(--ds-error-text-color);
+  margin-top: var(--ds-space-xs);
+  margin-left: var(--ds-space-xs);
 }
 
 /* =========================================================

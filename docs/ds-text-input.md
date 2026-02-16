@@ -1,8 +1,6 @@
 # ds-text-input
 
-Reusable text input component for the shared Angular design system.
-
-This component provides a consistent, accessible, and form-compatible input control that works both inside Angular forms and as a standalone UI element.
+A single-line text control with standardized label, hint, and error presentation. Works standalone or inside Angular Reactive & Template-driven forms.
 
 ---
 

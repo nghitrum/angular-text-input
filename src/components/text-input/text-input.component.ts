@@ -132,8 +132,6 @@ export class TextInputComponent implements ControlValueAccessor {
   // HOST CLASSES
   // =================================================
 
-  @HostBinding('class.ds-text-input') baseClass = true;
-
   @HostBinding('class.disabled') get hostDisabled() {
     return this.disabled;
   }

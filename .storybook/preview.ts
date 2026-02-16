@@ -32,7 +32,24 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    docs: {
+      source: {
+        type: 'dynamic',
+      },
+      
+    },
   },
 };
+
+// Add this to handle the word wrap globally
+document.head.insertAdjacentHTML(
+  'beforeend',
+  `<style>
+    .prismjs-code {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }
+  </style>`,
+);
 
 export default preview;

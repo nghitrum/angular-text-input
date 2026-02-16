@@ -1,0 +1,260 @@
+import { Meta, Canvas, Story, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as TextInputStories from './text-input.stories';
+
+<Meta of={TextInputStories} />
+
+# DS Text Input
+
+The **DS Text Input** component allows users to enter a single line of text.
+
+It supports labels, hints, validation messages, multiple layouts, and integrates with Angular forms via `ControlValueAccessor`.
+
+---
+
+### When to use
+
+#### ✅ Use this
+
+- Collecting short text — name, email, search
+- Form fields with validation
+- Structured single-line data entry
+- Any field needing label + hint + error
+
+#### ❌ Don’t use this
+
+- Multi-line text → use `textarea`
+- Fixed choices → use `select` or radio
+- Complex formatted input (e.g. date, phone)
+- Passing styling values as inputs
+
+---
+
+### Installation
+
+The component is standalone. Import it wherever it is used.
+
+```ts
+import { TextInputComponent } from '@ds/components';
+
+// With Reactive Forms
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, TextInputComponent],
+})
+export class ExampleComponent {}
+```
+
+---
+
+### Basic example
+
+Default state: stacked layout, md size, no value.
+
+_Recommended configuration for most use cases._
+
+<Canvas of={TextInputStories.Default} sourceState="shown" />
+
+### Variants
+
+#### States
+
+We support different states in this order:
+
+1. **Disabled**: The input is non-interactive and visually distinct.
+2. **Error**: The input has an error message and is styled to indicate an error
+3. **Hint**: The input has a hint message providing additional information.
+4. **Default**: The input is interactive with no error or hint.
+
+##### Disabled
+
+<Canvas of={TextInputStories.Disabled} sourceState="shown" />
+
+##### Error
+
+<Canvas of={TextInputStories.Error} sourceState="shown" />
+
+##### With hint
+
+<Canvas of={TextInputStories.WithHint} sourceState="shown" />
+
+---
+
+#### Sizes
+
+Three `size` variants: `sm`, `md` (default), and `lg`. Use consistently within a layout zone.
+
+<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px', border: '1px solid rgba(38, 74, 115, 0.15)',padding: '1rem' }}>
+<Story of={TextInputStories.Small} />
+
+<Story of={TextInputStories.Medium} />
+
+<Story of={TextInputStories.Large} />
+</div>
+```tsx
+<ds-text-input size="sm"  label="Name" />
+<ds-text-input size="md"  label="Name" />
+<ds-text-input size="lg"  label="Name" />
+```
+
+---
+
+#### Layouts
+
+Three `layout` variants: `stacked` (default), `inline`, and floating. Choose based on form complexity and space constraints.
+
+##### Stacked (default)
+
+<Canvas of={TextInputStories.Stacked} sourceState="none" />
+
+##### Inline
+
+<Canvas of={TextInputStories.Inline} sourceState="none" />
+
+##### Floating
+
+<Canvas of={TextInputStories.Floating} sourceState="none" />
+
+```tsx
+<ds-text-input layout="stacked"  label="Name" />  <!-- default -->
+<ds-text-input layout="inline"   label="Name" />
+<ds-text-input layout="floating"  label="Name" />
+```
+
+---
+
+### API
+
+#### Inputs
+
+| Input         | Type                              | Default        | Description                                              |
+| ------------- | --------------------------------- | -------------- | -------------------------------------------------------- |
+| `label`       | `string`                          | —              | Visible label displayed above input                      |
+| `placeholder` | `string`                          | —              | Native input placeholder                                 |
+| `hint`        | `string`                          | —              | Helper text shown below input (hidden when error exists) |
+| `error`       | `string`                          | —              | Error message displayed below input                      |
+| `type`        | `'text' \| 'email' \| 'password'` | `'text'`       | Native input type                                        |
+| `size`        | `'sm' \| 'md' \| 'lg'`            | `'md'`         | Visual size variant                                      |
+| `disabled`    | `boolean`                         | `false`        | Disables input interaction                               |
+| `readonly`    | `boolean`                         | `false`        | Allows focus but prevents editing                        |
+| `required`    | `boolean`                         | `false`        | Marks field as required and sets ARIA metadata           |
+| `id`          | `string`                          | auto-generated | Used to associate label and messages                     |
+| `value`       | `string`                          | `''`           | Current value (standalone usage)                         |
+| `ariaLabel`   | `string`                          | —              | Accessible name when no visible label is provided        |
+
+---
+
+#### Outputs
+
+| Output        | Type                   | Description                     |
+| ------------- | ---------------------- | ------------------------------- |
+| `valueChange` | `EventEmitter<string>` | Emits when user changes value   |
+| `focus`       | `EventEmitter<void>`   | Emits when input receives focus |
+| `blur`        | `EventEmitter<void>`   | Emits when input loses focus    |
+
+---
+
+### Angular Forms Integration
+
+The component implements ControlValueAccessor and integrates with all Angular form APIs.
+
+#### Template-driven forms
+
+```html
+<ds-text-input label="Email" placeholder="Enter email" [(ngModel)]="email" required />
+```
+
+#### Reactive forms
+
+```tsx
+<ds-text-input
+  label="Email"
+  placeholder="Enter email"
+  [(ngModel)]="email"
+  required
+></ds-text-input>
+```
+
+#### Controlled (standalone) usage
+
+```html
+<ds-text-input label="Name" [value]="name" (valueChange)="name = $event" />
+```
+
+---
+
+### Validation Pattern
+
+Validation logic lives in the parent. Pass the computed error string to the `error` input.
+
+```tsx
+form = new FormGroup({
+  email: new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]),
+});
+
+get emailError(): string | null {
+  const c = this.form.get('email');
+  if (!c || !c.touched || !c.invalid) return null;
+
+  if (c.errors?.['required']) return 'Email is required';
+  if (c.errors?.['email'])    return 'Invalid email format';
+
+  return null;
+}
+
+```
+
+> **Note**: Never implement validation rules inside ds-text-input. Validators belong in the form model.
+
+---
+
+### Accessibility
+
+The component automatically wires all required ARIA attributes. Always provide a visible `label` or fall back to `ariaLabel`.
+
+| Attribute          | Description                                                       |
+| ------------------ | ----------------------------------------------------------------- |
+| `aria-invalid`     | Set to `true` when an error message is present.                   |
+| `aria-required`    | Set when the input is required.                                   |
+| `aria-describedby` | Links to hint or error element. Error takes priority.             |
+| `for` / `id`       | Label is associated via `for`. `id` is auto-generated if omitted. |
+
+### Behavior notes
+
+| Feature           | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **Error vs Hint** | Error message overrides hint in both visual display and screen reader output. |
+| **Disabled**      | Cannot be focused or edited. Syncs with form control disabled state.          |
+| **Readonly**      | Can be focused, but the value cannot be changed by the user.                  |
+| **Keyboard**      | Preserves all native keyboard interactions — Tab, Shift+Tab, copy, paste.     |
+| **Theming**       | Styled via design tokens / CSS variables — no hardcoded colours or spacing.   |
+
+### Best Practices
+
+#### ✅ Do
+
+- Always provide a **label** or `ariaLabel`
+- Use hint text to help users complete the field
+- Show errors clearly and after interaction
+- Prefer reactive forms for data entry
+- Use size variants for layout consistency
+- Keep placeholder text short and descriptive
+
+#### ❌ Don’t
+
+- Rely on placeholder text as the label
+- Hide required indicators from users
+- Implement validation inside the component
+- Pass styling values (e.g. `borderColor`) as inputs
+- Remove focus outline without a visible replacement
+- Use both label and `ariaLabel` simultaneously
+
+---
+
+> Current version: 1.0.0
+
+> Updated at: 2025/16/02 by Nghi Nguyen (nguyenvietnghi@live.com)

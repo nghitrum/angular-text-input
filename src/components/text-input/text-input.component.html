@@ -6,31 +6,31 @@
     }
   </label>
 }
-
-<input
-  class="input"
-  [id]="id"
-  [type]="type"
-  [value]="value"
-  [disabled]="disabled"
-  [placeholder]="layout === 'floating' ? '' : placeholder || ''"
-  [readonly]="readonly"
-  [required]="required"
-  [attr.aria-label]="!label ? ariaLabel : null"
-  [attr.aria-required]="required || null"
-  [attr.aria-invalid]="error ? true : null"
-  [attr.aria-describedby]="describedBy"
-  (input)="handleInput($event)"
-  (focus)="handleFocus()"
-  (blur)="handleBlur()"
-/>
-
-@if (error) {
-  <div class="error-message" [id]="errorId" role="alert">
-    {{ error }}
-  </div>
-} @else if (hint) {
-  <div class="hint" [id]="hintId">
-    {{ hint }}
-  </div>
-}
+<div class="control">
+  <input
+    class="input"
+    [id]="id"
+    [type]="type"
+    [value]="value"
+    [disabled]="disabled"
+    [placeholder]="layout === 'floating' ? '' : placeholder || ''"
+    [readonly]="readonly"
+    [required]="required"
+    [attr.aria-label]="!label ? ariaLabel : null"
+    [attr.aria-required]="required || null"
+    [attr.aria-invalid]="error ? true : null"
+    [attr.aria-describedby]="describedBy"
+    (input)="handleInput($event)"
+    (focus)="handleFocus()"
+    (blur)="handleBlur()"
+  />
+  @if (error) {
+    <small class="error-message" [id]="errorId" role="alert">
+      {{ error }}
+    </small>
+  } @else if (hint) {
+    <small class="hint" [id]="hintId">
+      {{ hint }}
+    </small>
+  }
+</div>

@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TextInputComponent } from './../components/text-input/text-input.component';
+import { TextInputComponent } from './text-input.component';
 
 const meta: Meta<TextInputComponent> = {
   title: 'Design System/Text Input',
   component: TextInputComponent,
-  tags: ['autodocs'],
 
   args: {
     label: 'Email',
     size: 'md',
     layout: 'stacked',
     placeholder: 'Enter email',
+    hint: 'hello hint',
   },
 
   argTypes: {
@@ -69,7 +69,6 @@ export const Inline: Story = {
 export const Floating: Story = {
   args: {
     layout: 'floating',
-    placeholder: '',
   },
 };
 
@@ -85,28 +84,14 @@ export const WithHint: Story = {
 
 export const Error: Story = {
   args: {
+    value: 'invalid-email',
     error: 'Invalid email address',
   },
 };
 
 export const Disabled: Story = {
   args: {
+    value: 'you@company.com',
     disabled: true,
   },
-};
-
-/* =========================================================
-   VISUAL COMPARISON (VERY USEFUL)
-   ========================================================= */
-
-export const AllLayouts: Story = {
-  render: () => ({
-    template: `
-      <div style="display:grid; gap:24px; width:320px">
-        <ds-text-input label="Stacked" layout="stacked"></ds-text-input>
-        <ds-text-input label="Inline" layout="inline"></ds-text-input>
-        <ds-text-input label="Floating" layout="floating"></ds-text-input>
-      </div>
-    `,
-  }),
 };
