@@ -1,0 +1,31 @@
+name: Build and Publish Storybook to GitHub Pages
+
+on:
+  push:
+    branches:
+      - 'main'
+
+# Grant GITHUB_TOKEN the necessary permissions
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.1' # Use a stable Node version
+
+      # Build and deploy using the community action
+      - name: Deploy Storybook
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          path: storybook-static # The directory where your storybook is built
+          build_command: npm run build-storybook # Your build command
