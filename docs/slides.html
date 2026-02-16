@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Angular Text Input Component</title>
+    <style>
+      :root {
+        --r: #dd0031;
+        --a: #ff6d00;
+        --g: #00d68f;
+        --b: #4fc3f7;
+        --bg: #0f0f1a;
+        --c1: #16162a;
+        --c2: #1e1e36;
+        --t: #f0f0ff;
+        --m: #8888aa;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        font-family: "Segoe UI", system-ui, sans-serif;
+        color: var(--t);
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 24px;
+        background: rgba(15, 15, 26, 0.95);
+        border-bottom: 1px solid rgba(221, 0, 49, 0.3);
+        flex-shrink: 0;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--r);
+      }
+      .ctr {
+        font-size: 13px;
+        color: var(--m);
+      }
+      .ctr b {
+        color: var(--t);
+      }
+      .stage {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 32px;
+      }
+      .slide {
+        display: none;
+        width: 100%;
+        max-width: 960px;
+        min-height: 460px;
+        background: var(--c1);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        animation: fi 0.3s ease;
+      }
+      .slide.on {
+        display: flex;
+        flex-direction: column;
+      }
+      @keyframes fi {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .sbar {
+        height: 5px;
+        background: linear-gradient(90deg, var(--r), var(--a));
+        flex-shrink: 0;
+      }
+      .body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 44px 52px 36px;
+        gap: 22px;
+      }
+      .lbl {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--r);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .lbl::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(221, 0, 49, 0.25);
+      }
+      h1 {
+        font-size: 34px;
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--r);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      h2 em {
+        font-style: normal;
+        color: var(--r);
+      }
+      .sub {
+        font-size: 14px;
+        color: var(--m);
+        line-height: 1.6;
+      }
+      .g2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .g3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+      }
+      .card {
+        background: var(--c2);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        padding: 16px 20px;
+      }
+      .ct {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--m);
+        margin-bottom: 8px;
+      }
+      .card.cr {
+        border-top: 3px solid var(--r);
+      }
+      .card.cb {
+        border-top: 3px solid var(--b);
+      }
+      .card.cg {
+        border-top: 3px solid var(--g);
+      }
+      .card.co {
+        border-top: 3px solid var(--a);
+      }
+      .bl {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .bl li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .d {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--r);
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+      .d.b {
+        background: var(--b);
+      }
+      .d.g {
+        background: var(--g);
+      }
+      .d.o {
+        background: var(--a);
+      }
+      .pill {
+        display: inline-flex;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        padding: 2px 7px;
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--b);
+      }
+      .code {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-family: monospace;
+        font-size: 12px;
+        line-height: 1.9;
+        color: #c9d1d9;
+      }
+      .br {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid;
+      }
+      .badge.r {
+        background: rgba(221, 0, 49, 0.12);
+        border-color: rgba(221, 0, 49, 0.5);
+        color: #ff6680;
+      }
+      .badge.b {
+        background: rgba(79, 195, 247, 0.12);
+        border-color: rgba(79, 195, 247, 0.4);
+        color: var(--b);
+      }
+      .badge.g {
+        background: rgba(0, 214, 143, 0.12);
+        border-color: rgba(0, 214, 143, 0.4);
+        color: var(--g);
+      }
+      .badge.o {
+        background: rgba(255, 109, 0, 0.12);
+        border-color: rgba(255, 109, 0, 0.4);
+        color: var(--a);
+      }
+      .tr {
+        display: flex;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .tp {
+        flex: 1;
+        padding: 11px 14px;
+        font-size: 13px;
+        line-height: 1.5;
+        background: rgba(0, 214, 143, 0.07);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .tc {
+        flex: 1;
+        padding: 11px 14px;
+        font-size: 13px;
+        line-height: 1.5;
+        background: rgba(221, 0, 49, 0.07);
+      }
+      .tl {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .tp .tl {
+        color: var(--g);
+      }
+      .tc .tl {
+        color: var(--r);
+      }
+      .og {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 13px;
+      }
+      .oi {
+        background: var(--c2);
+        border-radius: 12px;
+        padding: 22px 14px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 9px;
+      }
+      .oi .ico {
+        font-size: 30px;
+      }
+      .oi .lbl2 {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .oi p {
+        font-size: 11px;
+        color: var(--m);
+      }
+      .dc {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        text-align: center;
+      }
+      .di {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--r), var(--a));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 0 40px rgba(221, 0, 49, 0.4);
+      }
+      .deco {
+        position: absolute;
+        bottom: -40px;
+        right: -40px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(221, 0, 49, 0.15) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .bot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 12px 24px;
+        background: rgba(15, 15, 26, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        flex-shrink: 0;
+      }
+      .nb {
+        background: var(--c2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--t);
+        padding: 7px 22px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .nb:hover:not(:disabled) {
+        background: var(--r);
+        border-color: var(--r);
+      }
+      .nb:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      .dots {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .dn {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        padding: 0;
+      }
+      .dn.on {
+        background: var(--r);
+        width: 15px;
+        border-radius: 3px;
+      }
+      .ntb {
+        position: fixed;
+        bottom: 52px;
+        right: 18px;
+        background: var(--c2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--m);
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        z-index: 20;
+      }
+      .np {
+        position: fixed;
+        bottom: 48px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 20, 0.97);
+        border-top: 1px solid rgba(221, 0, 49, 0.3);
+        padding: 13px 28px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--m);
+        display: none;
+        z-index: 15;
+        max-height: 110px;
+        overflow-y: auto;
+      }
+      .np.on {
+        display: block;
+      }
+      .np b {
+        color: var(--r);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 250 250">
+          <polygon
+            points="125,30 232,74 214,186 125,222 36,186 18,74"
+            fill="#DD0031"
+          />
+          <polygon points="125,30 125,222 214,186 232,74" fill="#C3002F" />
+          <polygon
+            points="125,60 68,188 88,188 100,158 150,158 162,188 182,188"
+            fill="white"
+          />
+          <polygon points="125,92 110,150 140,150" fill="#DD0031" />
+        </svg>
+        Angular Component Design
+      </div>
+      <div class="ctr">Slide <b id="cs">1</b> of 12</div>
+    </div>
+
+    <div class="stage">
+      <!-- 1 Title -->
+      <div class="slide on" id="s1">
+        <div class="sbar"></div>
+        <div class="body" style="justify-content: center">
+          <div class="lbl">Presentation</div>
+          <h1>
+            Designing a <em>Reusable</em><br />Angular Text Input Component
+          </h1>
+          <p class="sub">
+            Approach, Decisions, and Trade-offs — from constraints to a
+            scalable, accessible design system component.
+          </p>
+          <div class="br" style="margin-top: 8px">
+            <span class="badge g">Angular</span
+            ><span class="badge b">Accessibility</span
+            ><span class="badge r">Design System</span
+            ><span class="badge o">Storybook</span>
+          </div>
+          <div class="deco"></div>
+        </div>
+      </div>
+
+      <!-- 2 Problem -->
+      <div class="slide" id="s2">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Problem Framing</div>
+          <h2>Common UI <em>Problems</em></h2>
+          <div class="g2">
+            <ul class="bl">
+              <li>
+                <span class="d"></span>Duplicated input implementations across
+                the codebase
+              </li>
+              <li>
+                <span class="d"></span>Inconsistent behavior and visual language
+              </li>
+              <li>
+                <span class="d o"></span>Accessibility handled differently — or
+                not at all
+              </li>
+              <li>
+                <span class="d o"></span>Unclear and undocumented usage for
+                developers
+              </li>
+            </ul>
+            <div
+              class="card cg"
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 10px;
+              "
+            >
+              <div class="ct">Goal</div>
+              <p style="font-size: 16px; font-weight: 700; line-height: 1.4">
+                One reliable, reusable component that standardizes behavior and
+                is easy to adopt.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Constraints -->
+      <div class="slide" id="s3">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Constraints</div>
+          <h2>Before Designing Anything</h2>
+          <div class="g2">
+            <ul class="bl">
+              <li>
+                <span class="d b"></span>Angular environment — no framework
+                switching
+              </li>
+              <li>
+                <span class="d b"></span>Must support Angular forms (<span
+                  class="pill"
+                  >ngModel</span
+                >
+                + Reactive)
+              </li>
+              <li><span class="d g"></span>Accessibility is non-negotiable</li>
+              <li>
+                <span class="d g"></span>Structure must scale to a full design
+                system
+              </li>
+              <li>
+                <span class="d o"></span>Easy for other developers to use
+                correctly
+              </li>
+            </ul>
+            <div
+              class="card cb"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                text-align: center;
+              "
+            >
+              <div style="font-size: 36px">🎯</div>
+              <p style="font-size: 13px; color: var(--m); line-height: 1.5">
+                Constraints defined before a single line of code was written.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Goals -->
+      <div class="slide" id="s4">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Design Goals</div>
+          <h2>From Constraints to <em>Goals</em></h2>
+          <div class="g3">
+            <div class="card cr">
+              <div class="ct">Predictability</div>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--m)">
+                Developers understand usage immediately without reading source
+                code.
+              </p>
+            </div>
+            <div class="card cb">
+              <div class="ct">Flexibility</div>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--m)">
+                Support different layouts and sizes without rewriting styles.
+              </p>
+            </div>
+            <div class="card cg">
+              <div class="ct">Accessibility</div>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--m)">
+                A11y and forms integration work by default — not as add-ons.
+              </p>
+            </div>
+            <div class="card co" style="grid-column: 1/3">
+              <div class="ct">Scalable Documentation</div>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--m)">
+                Docs live alongside the component and stay in sync — always.
+              </p>
+            </div>
+            <div
+              class="card"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+              "
+            >
+              🏗️
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Approach -->
+      <div class="slide" id="s5">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Approach</div>
+          <h2>Build Component + Docs <em>Together</em></h2>
+          <div class="g2">
+            <ul class="bl">
+              <li>
+                <span class="d"></span>Implementation, examples, and usage docs
+                co-located
+              </li>
+              <li>
+                <span class="d b"></span>Storybook as dev environment and
+                documentation platform
+              </li>
+              <li>
+                <span class="d g"></span>Documentation stays in sync — no drift
+              </li>
+              <li>
+                <span class="d o"></span>Static deployment ready for sharing
+              </li>
+            </ul>
+            <div class="card">
+              <div class="ct">Co-location Pattern</div>
+              <div class="code">
+                <span style="color: #4fc3f7">text-input/</span><br />
+                &nbsp;&nbsp;├──
+                <span style="color: #dd0031">text-input.component</span
+                >.ts<br />
+                &nbsp;&nbsp;├──
+                <span style="color: #00d68f">text-input.stories</span>.mdx<br />
+                &nbsp;&nbsp;└──
+                <span style="color: #4fc3f7">text-input.docs</span>.md
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 CVA -->
+      <div class="slide" id="s6">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Key Decision #1</div>
+          <h2>Implement <em>ControlValueAccessor</em></h2>
+          <div class="g2">
+            <div>
+              <p style="font-size: 13px; color: var(--m); margin-bottom: 12px">
+                Integrates with Angular forms and behaves exactly like a native
+                input element.
+              </p>
+              <div class="code">
+                <span style="color: #dd0031">@Component</span>({<br />
+                &nbsp;&nbsp;providers: [{<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #4fc3f7"
+                  >provide</span
+                >: <span style="color: #00d68f">NG_VALUE_ACCESSOR</span>,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #4fc3f7"
+                  >useExisting</span
+                >: TextInputComponent,<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #4fc3f7">multi</span
+                >: <span style="color: #dd0031">true</span><br />
+                &nbsp;&nbsp;}]<br />
+                })
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div class="tr">
+                <div class="tp">
+                  <div class="tl">✅ Why</div>
+                  Works with ngModel and Reactive Forms. Behaves like a native
+                  input element.
+                </div>
+                <div class="tc">
+                  <div class="tl">⚠️ Trade-off</div>
+                  More implementation complexity upfront.
+                </div>
+              </div>
+              <div
+                class="card"
+                style="font-size: 13px; color: var(--m); line-height: 1.5"
+              >
+                <div class="ct">Decision Rationale</div>
+                Long-term flexibility over short-term simplicity.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 Typed API -->
+      <div class="slide" id="s7">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Key Decision #2</div>
+          <h2>Explicit <em>Typed API</em> Design</h2>
+          <div class="g2">
+            <div>
+              <p style="font-size: 13px; color: var(--m); margin-bottom: 12px">
+                Options limited to predefined typed values — no arbitrary
+                styling.
+              </p>
+              <div class="code">
+                <span style="color: #4fc3f7">size</span>:
+                <span style="color: #00d68f">'sm'</span> |
+                <span style="color: #00d68f">'md'</span> |
+                <span style="color: #00d68f">'lg'</span><br /><br />
+                <span style="color: #4fc3f7">layout</span>:
+                <span style="color: #00d68f">'stacked'</span><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+                <span style="color: #00d68f">'inline'</span><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+                <span style="color: #00d68f">'floating'</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div class="tr">
+                <div class="tp">
+                  <div class="tl">✅ Why</div>
+                  Ensures consistency and predictable UI across all consumers.
+                </div>
+                <div class="tc">
+                  <div class="tl">⚠️ Trade-off</div>
+                  Reduces design freedom for individual teams.
+                </div>
+              </div>
+              <div
+                class="card"
+                style="font-size: 13px; color: var(--m); line-height: 1.5"
+              >
+                <div class="ct">Design System Pattern</div>
+                Consistent, predictable UI over per-team flexibility.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 A11y -->
+      <div class="slide" id="s8">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Key Decision #3</div>
+          <h2>Accessibility as <em>Default Behavior</em></h2>
+          <div class="g2">
+            <ul class="bl">
+              <li>
+                <span class="d g"></span>Requires
+                <span class="pill">label</span> or
+                <span class="pill">aria-label</span> — no silent skipping
+              </li>
+              <li>
+                <span class="d g"></span>Hint and error auto-linked via
+                <span class="pill">aria-describedby</span>
+              </li>
+              <li>
+                <span class="d b"></span>Error state overrides hint for screen
+                readers
+              </li>
+              <li>
+                <span class="d o"></span>Enforced constraints, not optional
+                recommendations
+              </li>
+            </ul>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div class="tr">
+                <div class="tp">
+                  <div class="tl">✅ Why</div>
+                  Reliable a11y across all usage — no gaps.
+                </div>
+                <div class="tc">
+                  <div class="tl">⚠️ Trade-off</div>
+                  More rules for developers to follow.
+                </div>
+              </div>
+              <div
+                class="card cg"
+                style="font-size: 13px; color: var(--m); line-height: 1.5"
+              >
+                <div class="ct">Key Principle</div>
+                A11y enforced structurally, not by convention.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 Storybook -->
+      <div class="slide" id="s9">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Documentation Strategy</div>
+          <h2>Storybook + <em>MDX Docs</em></h2>
+          <div class="g2">
+            <ul class="bl">
+              <li>
+                <span class="d b"></span>Interactive, live examples — not static
+                screenshots
+              </li>
+              <li>
+                <span class="d b"></span>Single documentation source that stays
+                in sync
+              </li>
+              <li>
+                <span class="d g"></span>Statically deployable for easy sharing
+              </li>
+              <li>
+                <span class="d o"></span>Scales naturally to a full design
+                system
+              </li>
+            </ul>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div class="tr">
+                <div class="tp">
+                  <div class="tl">✅ Why</div>
+                  Interactive docs + easy sharing with zero drift.
+                </div>
+                <div class="tc">
+                  <div class="tl">⚠️ Trade-off</div>
+                  Additional tooling setup required upfront.
+                </div>
+              </div>
+              <div
+                class="card cb"
+                style="font-size: 13px; color: var(--m); line-height: 1.5"
+              >
+                <div class="ct">Long-term Benefit</div>
+                Foundation for a scalable, full component library.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 Trade-offs -->
+      <div class="slide" id="s10">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Summary</div>
+          <h2><em>Trade-offs</em> at a Glance</h2>
+          <div
+            style="display: flex; flex-direction: column; gap: 10px; flex: 1"
+          >
+            <div class="tr">
+              <div class="tp">
+                <div class="tl">Chosen</div>
+                More structure and consistency
+              </div>
+              <div class="tc">
+                <div class="tl">Trade-off</div>
+                Less ad-hoc flexibility
+              </div>
+            </div>
+            <div class="tr">
+              <div class="tp">
+                <div class="tl">Chosen</div>
+                Richer tooling and documentation
+              </div>
+              <div class="tc">
+                <div class="tl">Trade-off</div>
+                More setup and configuration overhead
+              </div>
+            </div>
+            <div class="tr">
+              <div class="tp">
+                <div class="tl">Chosen</div>
+                Full forms integration via CVA
+              </div>
+              <div class="tc">
+                <div class="tl">Trade-off</div>
+                Greater initial implementation complexity
+              </div>
+            </div>
+            <div class="card cr" style="text-align: center; padding: 14px 20px">
+              <div class="ct" style="text-align: center">Guiding Principle</div>
+              <p style="font-size: 15px; font-weight: 600">
+                All decisions optimized for
+                <em style="color: #dd0031; font-style: normal"
+                  >long-term scalability</em
+                >
+                over minimal short-term code.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11 Outcome -->
+      <div class="slide" id="s11">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Outcome</div>
+          <h2>What Was <em>Built</em></h2>
+          <div class="og" style="flex: 1; align-content: center">
+            <div class="oi">
+              <div class="ico">♿</div>
+              <div class="lbl2">Accessible by Default</div>
+              <p>A11y enforced structurally across all consumers.</p>
+            </div>
+            <div class="oi">
+              <div class="ico">📦</div>
+              <div class="lbl2">Reusable Input Component</div>
+              <p>Standardized behavior and clear developer contract.</p>
+            </div>
+            <div class="oi">
+              <div class="ico">📚</div>
+              <div class="lbl2">Clear Developer Docs</div>
+              <p>Storybook stories and MDX always in sync.</p>
+            </div>
+          </div>
+          <div class="card cg" style="text-align: center; padding: 13px">
+            <p style="font-size: 13px; color: var(--m)">
+              Structure supports adding more components consistently — the
+              foundation of a design system.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12 Demo -->
+      <div class="slide" id="s12">
+        <div class="sbar"></div>
+        <div class="body">
+          <div class="lbl">Live Demo</div>
+          <div class="dc">
+            <div class="di">▶</div>
+            <h2 style="font-size: 28px">Live Demonstration</h2>
+            <p class="sub">
+              Exploring configuration, behavior, and interactive documentation
+              in Storybook.
+            </p>
+            <div class="br" style="justify-content: center">
+              <span class="badge b">Configuration</span>
+              <span class="badge g">Behavior</span>
+              <span class="badge o">Documentation</span>
+              <span class="badge r">Forms Integration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /stage -->
+
+    <button class="ntb" onclick="toggleNotes()" id="ntbtn">
+      🗒 Speaker Notes
+    </button>
+    <div class="np" id="np"></div>
+
+    <div class="bot">
+      <button class="nb" id="pb" onclick="go(cur - 1)" disabled>← Prev</button>
+      <div class="dots" id="dotc"></div>
+      <button class="nb" id="fwdb" onclick="go(cur + 1)">Next →</button>
+    </div>
+
+    <script>
+      const notes = [
+        "Today I'll walk through how I approached designing a reusable text input component. I'll focus mainly on the design decisions and trade-offs, and at the end I'll show a short demo.",
+        "In many codebases, input fields are implemented repeatedly with slight differences. This leads to inconsistent UX, accessibility gaps, and unclear developer usage. The problem to solve: one reliable input component that standardizes behavior.",
+        "Before designing anything, I identified constraints: Angular forms integration, mandatory accessibility, scalable structure, and ease of use for other developers.",
+        "From the constraints, I defined design goals: predictability, flexibility in layout and size, accessibility and forms integration by default, and scalable documentation.",
+        "Instead of building component first and documenting later, I built them together. Each component has implementation, stories, and documentation in one place, with Storybook as both testing environment and documentation platform.",
+        "One important decision was implementing ControlValueAccessor. This allows full Angular forms integration and native input behavior. The trade-off is additional complexity — but it prevents limitations later. Long-term flexibility over short-term simplicity.",
+        "Strict typed configuration reduces flexibility but ensures consistency and predictable UI — typical in design systems.",
+        "Accessibility is enforced rather than optional. Error messaging overrides hint for screen readers. This adds constraints but ensures reliable accessibility across all usage.",
+        "Storybook as documentation environment adds tooling overhead but provides interactive documentation, easy sharing, and a design system foundation.",
+        "Overall, most decisions favor scalability and consistency over minimal code. This makes the component slightly more complex but more reliable in larger systems.",
+        "The result is a reusable component that standardizes behavior and is easy to adopt. The structure supports adding more components consistently.",
+        "Time for the live demonstration — we'll explore configuration options, form integration behavior, and the interactive Storybook documentation.",
+      ];
+      let cur = 1,
+        nOpen = false;
+      const dc = document.getElementById("dotc");
+      for (let i = 1; i <= 12; i++) {
+        const d = document.createElement("button");
+        d.className = "dn" + (i === 1 ? " on" : "");
+        d.onclick = () => go(i);
+        dc.appendChild(d);
+      }
+      function go(n) {
+        if (n < 1 || n > 12) return;
+        document.getElementById("s" + cur).classList.remove("on");
+        dc.children[cur - 1].classList.remove("on");
+        cur = n;
+        document.getElementById("s" + cur).classList.add("on");
+        dc.children[cur - 1].classList.add("on");
+        document.getElementById("cs").textContent = cur;
+        document.getElementById("pb").disabled = cur === 1;
+        document.getElementById("fwdb").disabled = cur === 12;
+        if (nOpen) showN();
+      }
+      function showN() {
+        document.getElementById("np").innerHTML =
+          "<b>Slide " + cur + ":</b> " + notes[cur - 1];
+      }
+      function toggleNotes() {
+        nOpen = !nOpen;
+        document.getElementById("np").classList.toggle("on", nOpen);
+        document.getElementById("ntbtn").textContent = nOpen
+          ? "✕ Hide Notes"
+          : "🗒 Speaker Notes";
+        if (nOpen) showN();
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") go(cur + 1);
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") go(cur - 1);
+      });
+    </script>
+  </body>
+</html>
