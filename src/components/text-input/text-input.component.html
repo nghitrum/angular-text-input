@@ -17,7 +17,6 @@
     [readonly]="readonly"
     [required]="required"
     [attr.aria-label]="!label ? ariaLabel : null"
-    [attr.aria-required]="required || null"
     [attr.aria-invalid]="error ? true : null"
     [attr.aria-describedby]="describedBy"
     (input)="handleInput($event)"
